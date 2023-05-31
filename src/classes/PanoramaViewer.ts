@@ -7,6 +7,8 @@ import {
 } from "three";
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 import { SphereImage } from "./SphereImage";
+import { Connector } from "../databaseEntities/Connector";
+
 export class PanoramaViewer {
     private _width: number = 0;
     public get width() : number {
@@ -76,6 +78,10 @@ export class PanoramaViewer {
         }
         this.panoramaPoint = pointData
         console.log(this.panoramaPoint)
+        console.log(1)
+        var connector = new Connector()
+        console.log(connector)
+        console.log(connector.Points)
         this.setImage(pointData.imagepath)
         
 
