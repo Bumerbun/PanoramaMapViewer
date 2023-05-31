@@ -10,7 +10,7 @@ import { PanoramaViewer } from '../classes/PanoramaViewer';
 export default {
   mounted() {
     var viewer = new PanoramaViewer(800, 600, window);
-    viewer.setImage("./src/assets/3.jpeg")
+    viewer.setPoint(1)
     document.getElementById("threejs-container")?.appendChild(viewer.element)
   }
 }

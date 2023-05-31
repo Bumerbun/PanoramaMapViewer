@@ -25,6 +25,8 @@ export class PanoramaViewer {
 
     private readonly sphere: SphereImage = new SphereImage();
 
+    private panoramaPoint: any;
+
     public get element() : HTMLCanvasElement {
         return this.renderer.domElement;
     }
@@ -57,9 +59,26 @@ export class PanoramaViewer {
     }
 
     public setImage(imagePath : string){
-        var texture = this.loader.load(imagePath,() => this.render())
+        var texture = this.loader.load(`http://localhost:3000/assets/${imagePath}` ,() => this.render())
         this.sphere.texture = texture
         this.render();
+    }
+
+    public async setPoint(pointID: number | string){
+        var response = await fetch(`http://localhost:3000/table/panoramas/selectRows?columnname=point&value=${pointID}`)
+        var response1 = await fetch(`http://localhost:3000/table/points/selectRows?columnname=id&value=${pointID}`)
+        if (!response.ok && !response1.ok){
+            return
+        }
+        var pointData = {
+            ...((await response.json())[0]),
+            ...((await response1.json())[0])
+        }
+        this.panoramaPoint = pointData
+        console.log(this.panoramaPoint)
+        this.setImage(pointData.imagepath)
+        
+
     }
 
     private render(): void{
